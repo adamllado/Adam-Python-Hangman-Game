@@ -10,8 +10,8 @@ from dotenv import load_dotenv
 #But if index is = -1, we will decrement number_of_guesses
 #We will print out the corresponding hangman gamestate based on the # of remaining guesses
 #We will also return the number_of_guesses which will update the number of tries left for the user in the while loop
-def HangManImageUpdate(index, number_of_guesses):
-    if index != -1:
+def HangManImageUpdate(index, number_of_guesses, already_guessed_flag):
+    if index != -1 or already_guessed_flag == True:
         pass
     else:
         number_of_guesses -= 1
@@ -173,11 +173,11 @@ def HangManGame():
     #from the list so that we return a str and not a list value    
     randomWord = random.choice(HangmanWordList).pop()
     
-    #Function that uses a free AI API to generate a hint for the user based on the randomWord given
-    hintMessage = AI_Hint_Generator(randomWord)
-    
     #guessedWord is a list that holds the current state of the guessed word
     guessedWord = HangManWordSetUp(randomWord)
+    
+    #Function that uses a free AI API to generate a hint for the user based on the randomWord given
+    hintMessage = AI_Hint_Generator(randomWord)
     
     #initialize number_of_guesses to 6, the number of guessed allowed per game
     number_of_guesses = 6
@@ -188,11 +188,14 @@ def HangManGame():
     #list that holds the letters that have already been guessed 
     already_guessed = [" "]
     
-    
     #While loop holding the main game logic, stops when number_of_guesses != 0 or correct_guesses != len(randomWord)
     while number_of_guesses != 0 and correct_guesses-1 != len(randomWord):
         #initialize guess to empty string
         guess = ''
+        
+        #Boolean Variable to tell the HangManImageUpdate function to pass and not decrement number_of_guesses
+        #If the guess is found in already_guessed
+        already_guessed_flag = False
         
         #intialize duplicates to 0 which determines if there are duplicate letters for a guess within the random word
         duplicates = 0
@@ -208,6 +211,8 @@ def HangManGame():
         #Checking if the guess is in already_guessed, and passing the main game loop if it is.
         if guess in already_guessed:
             print(f"\n|||Already Guessed {guess.title()}|||")
+            already_guessed_flag = True
+    
         else:
             #Holds the index of the guessed letter in the randomWord
             index = randomWord.find(guess)
@@ -229,13 +234,6 @@ def HangManGame():
                     duplicates -= 1
                     #increment correct_guesses
                     correct_guesses += 1
-                #if user wins, ask to restart game
-                if correct_guesses == len(randomWord):
-                    restart = input("Play Again?\n[yes/no]: ")
-                    if restart == 'yes':
-                        HangManGame()
-                    else:
-                        print("Thanks for Playing!")
                         
             #Conditional if guessed letter is correct but there is only 1 instance of that letter
             elif index != -1 and duplicates == 1:
@@ -243,26 +241,28 @@ def HangManGame():
                 guessedWord[index] = guess
                 #increment correct_guesses
                 correct_guesses += 1
-                #if user wins, ask to restart game
-                if correct_guesses == len(randomWord):
-                    restart = input("Play Again?\n[yes/no]: ")
-                    if restart == 'yes':
-                        HangManGame()
-                    else:
-                        print("Thanks for Playing!")
                         
         #########################################################################################################################
         ####### Functions and statements that happen in every conditional statment and loop: Put at end of inner game logic #####
         #########################################################################################################################
         
         #Update number_of_guesses and call HangManImageUpdate to update current game state
-        number_of_guesses = HangManImageUpdate(index, number_of_guesses)
+        number_of_guesses = HangManImageUpdate(index, number_of_guesses, already_guessed_flag)
         #Update current guessedWord list and print out the word state logic
         HangManWordUpdate(guessedWord)
         #Print the message hint for the user each loop
         print("Hint:", hintMessage)
         #Add guessed letter to already guessed list
         already_guessed.append(guess)
+        
+        #if user wins or loses, ask to restart game
+        if correct_guesses == len(randomWord) or number_of_guesses == 0:
+            restart = input("Play Again?\n[yes/no]: ")
+            if restart == 'yes':
+                HangManGame()
+            else:
+                print("Thanks for Playing!")
+
             
                  
 #Main function to call the HangManGame           
