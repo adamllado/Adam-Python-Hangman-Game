@@ -12,8 +12,14 @@ def HangManImageUpdate(index, number_of_guesses):
     else:
         number_of_guesses -= 1
     
-    
-    if number_of_guesses == 5:
+    if number_of_guesses == 6:
+        print("""
+                /|HANGMAN
+               / |Guess the Word
+                 |Or Leave Him Hanging
+                 |\n""")
+        
+    elif number_of_guesses == 5:
         print("""
                 /|HANGMAN
               O/ |Guess the Word
@@ -111,7 +117,7 @@ def HangManGame():
     #Print starting game state and opening screen
     print("""
              /|HANGMAN
-           O/ |Guess the Word
+            / |Guess the Word
               |Or Leave Him Hanging
               |Let's Begin!\n""")
 
@@ -130,8 +136,8 @@ def HangManGame():
     #guessedWord is a list that holds the current state of the guessed word
     guessedWord = HangManWordSetUp(randomWord)
     
-    #initialize number_of_guesses to 5, the number of guessed allowed per game
-    number_of_guesses = 5
+    #initialize number_of_guesses to 6, the number of guessed allowed per game
+    number_of_guesses = 6
     
     #initialize correct_guesses to 0
     correct_guesses = 0
