@@ -163,10 +163,6 @@ def HangManGame():
                 index = find_nth(randomWord, guess, duplicates)
                 #Replace the underscore in guessedWord with the correct letter guessed
                 guessedWord[index] = guess
-                #Update number_of_guesses and call HangManImageUpdate to update current game state
-                number_of_guesses = HangManImageUpdate(index, number_of_guesses)
-                #Update current guessedWord list and print out the word state logic
-                HangManWordUpdate(guessedWord)
                 #decrement duplicates
                 duplicates -= 1
                 #increment correct_guesses
@@ -178,6 +174,10 @@ def HangManGame():
                         HangManGame()
                     else:
                         print("Thanks for Playing!")
+            #Update number_of_guesses and call HangManImageUpdate to update current game state
+            number_of_guesses = HangManImageUpdate(index, number_of_guesses)
+            #Update current guessedWord list and print out the word state logic
+            HangManWordUpdate(guessedWord)
         #Conditional if guessed letter is correct but there is only 1 instance of that letter
         elif index != -1 and duplicates == 1:
             #Replace the underscore in guessedWord with the correct letter guessed
