@@ -125,7 +125,7 @@ def HangManGame():
     
     #randomWord holds an str that pulls a random word from the HangmanWordList and pops that word
     #from the list so that we return a str and not a list value    
-    randomWord = random.choice(HangmanWordList).pop()
+    randomWord = 'banana'
     
     #guessedWord is a list that holds the current state of the guessed word
     guessedWord = HangManWordSetUp(randomWord)
@@ -167,17 +167,17 @@ def HangManGame():
                 duplicates -= 1
                 #increment correct_guesses
                 correct_guesses += 1
-                #if user wins, ask to restart game
-                if correct_guesses == len(randomWord):
-                    restart = input("Play Again?\n[yes/no]: ")
-                    if restart == 'yes':
-                        HangManGame()
-                    else:
-                        print("Thanks for Playing!")
             #Update number_of_guesses and call HangManImageUpdate to update current game state
             number_of_guesses = HangManImageUpdate(index, number_of_guesses)
             #Update current guessedWord list and print out the word state logic
             HangManWordUpdate(guessedWord)
+            #if user wins, ask to restart game
+            if correct_guesses == len(randomWord):
+                restart = input("Play Again?\n[yes/no]: ")
+                if restart == 'yes':
+                    HangManGame()
+                else:
+                    print("Thanks for Playing!")
         #Conditional if guessed letter is correct but there is only 1 instance of that letter
         elif index != -1 and duplicates == 1:
             #Replace the underscore in guessedWord with the correct letter guessed
