@@ -137,7 +137,7 @@ def HangManGame():
     correct_guesses = 0
     
     #While loop holding the main game logic, stops when number_of_guesses != 0 or correct_guesses != len(randomWord)
-    while number_of_guesses != 0 or correct_guesses-1 != len(randomWord):
+    while number_of_guesses != 0 and correct_guesses-1 != len(randomWord):
         #initialize guess to empty string
         guess = ''
         
