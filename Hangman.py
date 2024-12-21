@@ -133,7 +133,7 @@ def AI_Hint_Generator(randomWord):
         
         response = completion.choices[0].message.content
         
-        #Conditional and looping logic to ensure that all instances of the randomWord is not found in the hint
+        #Conditional logic to ensure that all instances of the randomWord is not found in the hint
         if randomWord in response:
             response = response.replace(randomWord, "__")
                 
@@ -188,8 +188,8 @@ def HangManGame():
     #list that holds the letters that have already been guessed 
     already_guessed = [" "]
     
-    #While loop holding the main game logic, stops when number_of_guesses != 0 or correct_guesses != len(randomWord)
-    while number_of_guesses != 0 and correct_guesses-1 != len(randomWord):
+    #While loop holding the main game logic
+    while True:
         #initialize guess to empty string
         guess = ''
         
@@ -262,6 +262,7 @@ def HangManGame():
                 HangManGame()
             else:
                 print("Thanks for Playing!")
+                break
 
             
                  
