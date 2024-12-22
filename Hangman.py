@@ -188,8 +188,11 @@ def HangManGame():
     #list that holds the letters that have already been guessed 
     already_guessed = [" "]
     
+    #boolean that evaluates to true and stops the game if the user says no to the restart prompt
+    End_Game = False
+    
     #While loop holding the main game logic
-    while True:
+    while End_Game != True:
         #initialize guess to empty string
         guess = ''
         
@@ -262,7 +265,7 @@ def HangManGame():
                 HangManGame()
             else:
                 print("Thanks for Playing!")
-                break
+                End_Game = True
 
             
                  
